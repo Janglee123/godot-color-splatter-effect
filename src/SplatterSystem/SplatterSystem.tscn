@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://src/SplatterSystem/SplatterSystem.gd" type="Script" id=1]
+[ext_resource path="res://src/SplatterSystem/Spot/Spot.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/white.png" type="Texture" id=3]
+
+[sub_resource type="ImageTexture" id=1]
+size = Vector2( 1, 1 )
+
+[sub_resource type="ImageTexture" id=2]
+
+[node name="ParticalSystem" type="Node2D"]
+script = ExtResource( 1 )
+Target = NodePath("../TileMap")
+Spot = ExtResource( 2 )
+
+[node name="Spots" type="Node2D" parent="."]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Mask" type="Light2D" parent="."]
+texture = SubResource( 1 )
+mode = 3
+
+[node name="White" type="Sprite" parent="."]
+visible = false
+texture = ExtResource( 3 )
+
+[node name="SpotsLayer" type="Sprite" parent="."]
+texture = SubResource( 2 )
+centered = false
