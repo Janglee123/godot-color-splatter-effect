@@ -35,6 +35,7 @@ func _physics_process(delta: float) -> void:
 
 
 func _on_Area2D_body_entered(body: PhysicsBody2D) -> void:
+	position += _velocity #move it futher into wall
 	emit_signal("spot_collided", self)
 	queue_free()
 
@@ -56,4 +57,5 @@ func get_frame_rect() -> Rect2:
 
 func draw_spot(base: Image, dst: Vector2) -> void:
 	var texture: Image = $Sprite.get_texture().get_data()
-	base.blit_rect(texture, get_frame_rect(), dst)
+	var rect: = get_frame_rect()
+	base.blit_rect(texture, rect, dst - rect.size/2 )
