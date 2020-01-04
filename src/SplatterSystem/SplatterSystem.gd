@@ -11,7 +11,6 @@ var _spots_layer: Image
 
 
 func _ready() -> void:
-	yield(get_tree(),"idle_frame")
 	var tile_map : TileMap = get_node(Target)
 	var itex: = create_image_texture_from_tilemap(tile_map)
 	set_mask(itex, Z_INDEX)
