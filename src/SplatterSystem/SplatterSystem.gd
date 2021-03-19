@@ -1,7 +1,7 @@
 extends Node2D
 
 export (NodePath) var Target
-export (PackedScene) var Spot
+export (PackedScene) onready var spot
 export (int) var quantity = 1
 export (bool) var emitting = false
 export (bool) var oneShot = false
@@ -17,6 +17,9 @@ const Z_INDEX = -1
 var _history = Array()
 var _spots_layer: Image
 
+func _init():
+	pass
+
 func _ready() -> void:
 	initialize_pool()
 	var tile_map : TileMap = get_node(Target)
@@ -26,11 +29,11 @@ func _ready() -> void:
 	_spots_layer = get_viewport_size_image()
 	$SpotsLayer.z_as_relative = false
 	$SpotsLayer.z_index = Z_INDEX
+	print(spot)
 
 func initialize_pool() -> void:
-	Spot = preload("res://src/SplatterSystem/Spot/Spot.tscn")
 	for i in range(quantity):
-		particles.append(Spot.instance())
+		particles.append(spot.instance())
 		particles[i].connect("spot_collided", self, "_on_spot_collide")
 		$Spots.add_child(particles[i])
 
