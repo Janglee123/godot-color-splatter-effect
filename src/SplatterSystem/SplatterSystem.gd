@@ -2,6 +2,14 @@ extends Node2D
 
 export (NodePath) var Target
 export (PackedScene) var Spot
+export (int) var quantity = 1
+export (bool) var emitting = false
+export (bool) var oneShot = false
+export (Vector2) var direction = Vector2.UP
+export (Vector2) var gravity = Vector2.DOWN
+export (float, 0.0, 20.0, 0.01) var spread = PI/4
+
+var particles : Array
 
 const SNAP: = Vector2(5,5)
 const Z_INDEX = -1
@@ -9,8 +17,8 @@ const Z_INDEX = -1
 var _history = Array()
 var _spots_layer: Image
 
-
 func _ready() -> void:
+	initialize_pool()
 	var tile_map : TileMap = get_node(Target)
 	var itex: = create_image_texture_from_tilemap(tile_map)
 	set_mask(itex, Z_INDEX)
@@ -19,10 +27,17 @@ func _ready() -> void:
 	$SpotsLayer.z_as_relative = false
 	$SpotsLayer.z_index = Z_INDEX
 
+func initialize_pool() -> void:
+	Spot = preload("res://src/SplatterSystem/Spot/Spot.tscn")
+	for i in range(quantity):
+		particles.append(Spot.instance())
+		particles[i].connect("spot_collided", self, "_on_spot_collide")
+		$Spots.add_child(particles[i])
+
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouse:
 		var pos = get_viewport().get_mouse_position()
-		throw_particals(pos, Vector2.UP, Vector2.DOWN, PI/4, 2)
+		throw_particles(pos, direction, gravity, spread)
 
 func _on_spot_collide(spot: Spot):
 	var pos = spot.position
@@ -71,16 +86,21 @@ func create_image_texture_from_tilemap(tile_map: TileMap) -> ImageTexture:
 	return itex
 
 
-func throw_particals(pos: Vector2, direction: Vector2, acc: Vector2, deflect_range: float, n: int):
-	for i in range(n):
-		var dir: = direction.rotated(rand_range(-deflect_range/2, deflect_range/2))
-		var p: = get_partical(pos, dir, acc)
-		$Spots.add_child(p)
+func throw_particles(pos: Vector2, direction: Vector2, acc: Vector2, deflect_range: float):
+	if emitting:
+		for i in range(quantity):
+			var dir: = direction.rotated(rand_range(-deflect_range/2, deflect_range/2))
+			var p: = get_particle(pos, dir, acc, i)
+#			$Spots.add_child(p)
+		if oneShot:
+			emitting = false
 
 
-func get_partical(pos: Vector2, vel: Vector2, acc: Vector2) -> Node2D:
-	var new_spot: Node2D = Spot.instance()
-	new_spot.set_directions(vel, acc)
-	new_spot.global_position = pos
-	new_spot.connect("spot_collided", self, "_on_spot_collide")
-	return new_spot
+func get_particle(pos: Vector2, vel: Vector2, acc: Vector2, index : int) -> Node2D:
+	if particles[index].canReposition:
+		particles[index].canReposition = false
+		particles[index].self_disable(false)
+		particles[index].child_disable(false)
+		particles[index].set_directions(vel, acc)
+		particles[index].set_spot_global_position(pos)
+	return particles[index]

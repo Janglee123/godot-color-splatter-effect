@@ -9,10 +9,12 @@ size = Vector2( 1, 1 )
 
 [sub_resource type="ImageTexture" id=2]
 
-[node name="ParticalSystem" type="Node2D"]
+[node name="SplatterSystem" type="Node2D"]
 script = ExtResource( 1 )
 Target = NodePath("../TileMap")
 Spot = ExtResource( 2 )
+quantity = 16
+emitting = true
 
 [node name="Spots" type="Node2D" parent="."]
 __meta__ = {

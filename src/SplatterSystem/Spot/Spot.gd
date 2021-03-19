@@ -13,7 +13,13 @@ var _acc: Vector2
 var _area
 var _smooth: = 0.9
 
+var canReposition : bool = true
+
+func _init() -> void:
+	self_disable(true)
+
 func _ready() -> void:
+	child_disable(true)
 	z_as_relative = false
 	$Sprite.frame = randi() % 8
 	
@@ -37,8 +43,28 @@ func _physics_process(delta: float) -> void:
 func _on_Area2D_body_entered(body: PhysicsBody2D) -> void:
 	position += _velocity #move it futher into wall
 	emit_signal("spot_collided", self)
-	queue_free()
+	canReposition = true
+	self_disable(true)
+	child_disable(true)
 
+func self_disable(value : bool):
+	self.set_deferred("visible", !value)
+	set_process(!value)
+	set_process_input(!value)
+	set_process_internal(!value)
+	set_process_unhandled_input(!value)
+	set_process_unhandled_key_input(!value)
+	set_physics_process(!value)
+	set_physics_process_internal(!value)
+
+func child_disable(value : bool):
+	$Area2D.set_deferred("monitoring", !value)
+	$Area2D.set_deferred("monitorable", !value)
+	$Area2D/CollisionShape2D.set_deferred("disabled", value)
+
+
+func set_spot_global_position(pos : Vector2):
+	self.global_position = pos
 
 func set_directions(vel: Vector2, acc: Vector2) -> void:
 	_velocity = vel.normalized()
