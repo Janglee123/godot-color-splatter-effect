@@ -1,0 +1,25 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://src/Examples/Simple/Main.gd" type="Script" id=1]
+[ext_resource path="res://src/Examples/MainTileSet.tres" type="TileSet" id=2]
+[ext_resource path="res://src/Examples/Simple/Particles/ParticleRed.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/SplatterSystem/SplatLayer.tscn" type="PackedScene" id=4]
+[ext_resource path="res://src/Examples/Simple/Particles/ParticleYellow.tscn" type="PackedScene" id=5]
+[ext_resource path="res://src/Examples/Simple/Particles/ParticleBlue.tscn" type="PackedScene" id=6]
+[ext_resource path="res://src/Examples/Simple/Particles/ParticleGreen.tscn" type="PackedScene" id=7]
+
+[node name="Main" type="Node2D"]
+script = ExtResource( 1 )
+ParticleRed = ExtResource( 3 )
+ParticleBlue = ExtResource( 6 )
+ParticleGreen = ExtResource( 7 )
+ParticleYellow = ExtResource( 5 )
+
+[node name="TileMap2" type="TileMap" parent="."]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 60, 60 )
+collision_layer = 524289
+format = 1
+tile_data = PoolIntArray( 327691, 22, 0, 393221, 22, 0, 393227, 1, 0, 393231, 0, 0, 393232, 0, 0, 458752, 15, 0, 458753, 14, 0, 458757, 1, 0, 458763, 3, 0, 458766, 12, 0, 458767, 0, 0, 458768, 0, 0, 524288, 0, 0, 524289, 0, 0, 524290, 15, 0, 524291, 15, 0, 524292, 15, 0, 524293, 21, 0, 524294, 11, 0, 524295, 4, 0, 524296, 4, 0, 524297, 4, 0, 524298, 11, 0, 524299, 21, 0, 524300, 15, 0, 524301, 12, 0, 524302, 0, 0, 524303, 0, 0, 524304, 0, 0, 589824, 0, 0, 589825, 0, 0, 589826, 0, 0, 589827, 0, 0, 589828, 0, 0, 589829, 21, 0, 589831, 2, 0, 589832, 2, 0, 589833, 2, 0, 589835, 21, 0, 589836, 0, 0, 589837, 0, 0, 589838, 0, 0, 589839, 0, 0, 589840, 0, 0 )
+
+[node name="SplatLayer" parent="TileMap2" instance=ExtResource( 4 )]

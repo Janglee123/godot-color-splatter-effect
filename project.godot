@@ -9,19 +9,25 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Node2D",
-"class": "Spot",
+"base": "Area2D",
+"class": "ParticleCollider",
 "language": "GDScript",
-"path": "res://src/SplatterSystem/Spot/Spot.gd"
+"path": "res://src/SplatterSystem/ParticleCollider.gd"
+}, {
+"base": "Node2D",
+"class": "SplatLayer",
+"language": "GDScript",
+"path": "res://src/SplatterSystem/SplatLayer.gd"
 } ]
 _global_script_class_icons={
-"Spot": ""
+"ParticleCollider": "",
+"SplatLayer": ""
 }
 
 [application]
 
-config/name="color-splatter-effect"
-run/main_scene="res://src/Main/Main.tscn"
+config/name="Color Splatter Effect"
+run/main_scene="res://src/Examples/Simple/Main.tscn"
 config/icon="res://icon.png"
 
 [input]
@@ -34,4 +40,5 @@ mouse_click={
 
 [rendering]
 
+environment/default_clear_color=Color( 0.27451, 0.27451, 0.27451, 1 )
 environment/default_environment="res://default_env.tres"
