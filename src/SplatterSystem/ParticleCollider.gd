@@ -16,8 +16,6 @@ func set_disabled(value: bool) -> void:
 
 
 func _on_body_entered(body: TileMap):
-	yield(get_tree(), "idle_frame")
-	yield(get_tree(), "idle_frame")
 	collided_layer = body.get_node('SplatLayer') as SplatLayer
 	collided_canvas = body.get_node('SplatLayer/Canvas') as Sprite
 	global_collision_position = global_position
