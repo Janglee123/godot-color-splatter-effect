@@ -1,0 +1,41 @@
+[gd_scene load_steps=18 format=2]
+
+[ext_resource path="res://src/Examples/Simple/Particle.gd" type="Script" id=1]
+[ext_resource path="res://addons/SplatterEffect/ParticleCollider.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/colored/path540.png" type="Texture" id=3]
+[ext_resource path="res://assets/colored/path144.png" type="Texture" id=5]
+[ext_resource path="res://assets/colored/path292.png" type="Texture" id=6]
+[ext_resource path="res://assets/colored/path138.png" type="Texture" id=7]
+[ext_resource path="res://assets/colored/path208.png" type="Texture" id=8]
+[ext_resource path="res://assets/colored/path222.png" type="Texture" id=9]
+[ext_resource path="res://assets/colored/path452.png" type="Texture" id=10]
+[ext_resource path="res://assets/colored/path548.png" type="Texture" id=11]
+[ext_resource path="res://assets/colored/path532.png" type="Texture" id=12]
+[ext_resource path="res://assets/colored/path524.png" type="Texture" id=13]
+[ext_resource path="res://assets/colored/path276.png" type="Texture" id=14]
+[ext_resource path="res://assets/colored/path544.png" type="Texture" id=15]
+[ext_resource path="res://assets/colored/path528.png" type="Texture" id=16]
+[ext_resource path="res://assets/colored/path536.png" type="Texture" id=17]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 0.5
+
+[node name="Particle" type="Sprite"]
+scale = Vector2( 0.9, 0.9 )
+script = ExtResource( 1 )
+sprites = [ ExtResource( 7 ), ExtResource( 5 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 14 ), ExtResource( 6 ), ExtResource( 10 ), ExtResource( 13 ), ExtResource( 16 ), ExtResource( 12 ), ExtResource( 17 ), ExtResource( 3 ), ExtResource( 15 ), ExtResource( 11 ) ]
+
+[node name="ParticleCollider" parent="." instance=ExtResource( 2 )]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ParticleCollider"]
+position = Vector2( 0, -8 )
+shape = SubResource( 1 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 10.0
+
+[node name="Tween" type="Tween" parent="."]
+
+[connection signal="particle_collided" from="ParticleCollider" to="." method="_on_ParticleCollider_particle_collided"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="tween_all_completed" from="Tween" to="." method="_on_Tween_tween_all_completed"]

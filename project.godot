@@ -12,12 +12,12 @@ _global_script_classes=[ {
 "base": "Area2D",
 "class": "ParticleCollider",
 "language": "GDScript",
-"path": "res://src/SplatterSystem/ParticleCollider.gd"
+"path": "res://addons/SplatterEffect/ParticleCollider.gd"
 }, {
-"base": "Node2D",
+"base": "Reference",
 "class": "SplatLayer",
 "language": "GDScript",
-"path": "res://src/SplatterSystem/SplatLayer.gd"
+"path": "res://addons/SplatterEffect/SplatLayer.gd"
 } ]
 _global_script_class_icons={
 "ParticleCollider": "",
@@ -30,6 +30,10 @@ config/name="Color Splatter Effect"
 run/main_scene="res://src/Examples/Simple/Main.tscn"
 config/icon="res://icon.png"
 
+[editor_plugins]
+
+enabled=PoolStringArray( "res://addons/SplatterEffect/plugin.cfg" )
+
 [input]
 
 mouse_click={
@@ -40,5 +44,5 @@ mouse_click={
 
 [rendering]
 
-environment/default_clear_color=Color( 0.27451, 0.27451, 0.27451, 1 )
+environment/default_clear_color=Color( 0.67451, 0.67451, 0.67451, 1 )
 environment/default_environment="res://default_env.tres"
